@@ -159,25 +159,25 @@ flutter run
 ![Home Light](screenshots/home_light.png)
 
 ### Home Screen - Dark Mode
-![Home Dark](screenshots/home_dark.png)
+![Home Dark](docs/screenshots/home_dark.png)
 
 ### Add Task
-![Add Task](screenshots/add_task.png)
+![Add Task](docs/screenshots/add_task.png)
 
 ### Edit Task
-![Edit Task](screenshots/edit_task.png)
+![Edit Task](docs/screenshots/edit_task.png)
 
 ### Search
-![Search](screenshots/search.png)
+![Search](docs/screenshots/search.png)
 
 ### Pending Tasks
-![Pending Tasks](screenshots/pending_tasks.png)
+![Pending Tasks](docs/screenshots/pending_tasks.png)
 
 ### Completed Tasks
-![Completed Tasks](screenshots/completed_tasks.png)
+![Completed Tasks](docs/screenshots/completed_tasks.png)
 
 ### Delete Confirmation
-![Delete Confirmation](screenshots/delete_confirmation.png)
+![Delete Confirmation](docs/screenshots/delete_confirmation.png)
 
 ## Internship Task
 
