@@ -1,144 +1,127 @@
 # Task Manager 📋
 
-A cross-platform Flutter task management application built during the App Development Internship.
+A cross-platform Flutter task management application designed to help users create, organize, search, filter, and manage their daily tasks.
 
-The application allows users to create, view, update, delete, search, filter, and complete tasks while storing all data locally using Hive.
+## ✨ Features
 
-## Features
-
-* Create new tasks
-* View all saved tasks
-* Edit existing tasks
-* Delete tasks with confirmation
+* Create tasks
+* View tasks
+* Edit tasks
+* Delete tasks
 * Mark tasks as completed
-* Search tasks by title or description
-* Filter tasks by:
-
-    * All
-    * Pending
-    * Completed
-* Set a due date for each task
-* Local data persistence using Hive
-* Light and Dark Mode
+* Set due dates
+* Search by title or description
+* Filter by All, Pending, and Completed
+* Light Mode
+* Dark Mode
 * Persistent theme preference
-* Responsive UI for different screen sizes
-* State management using BLoC/Cubit
+* Local data persistence
+* Responsive UI
 
-## Technologies Used
+## 🛠️ Tech Stack
 
-* Flutter
-* Dart
-* Hive
-* SharedPreferences
-* Flutter BLoC / Cubit
-* Material 3
+* **Flutter**
+* **Dart**
+* **Hive**
+* **SharedPreferences**
+* **BLoC / Cubit**
+* **Material 3**
 
-## Project Structure
+## 🏗️ Architecture
+
+The application follows a simple layered structure:
 
 ```text
-lib/
-├── core/
-│   └── theme/
-│       └── app_theme.dart
-│
-├── cubit/
-│   └── task_cubit.dart
-│
-├── data/
-│   ├── local/
-│   │   └── task_adapter.dart
-│   └── repositories/
-│       └── task_repository.dart
-│
-├── models/
-│   └── task_model.dart
-│
-├── screens/
-│   ├── add_task_screen.dart
-│   └── home_screen.dart
-│
-└── main.dart
+UI
+ ↓
+Cubit
+ ↓
+Repository
+ ↓
+Hive
+ ↓
+Local Storage
 ```
 
-## Local Storage
+This structure separates the user interface, state management, repository logic, and local data storage.
 
-The application uses **Hive** as a local NoSQL database.
+## 💾 Local Storage
+
+The application uses Hive to store task data locally.
 
 Each task contains:
 
-* Task ID
+* ID
 * Title
 * Description
-* Creation date
-* Due date
-* Completion status
+* Creation Date
+* Due Date
+* Completion Status
 
-The data remains available after closing and reopening the application.
+Task data remains available after restarting the application.
 
-## CRUD Operations
+## 🔎 Search & Filtering
 
-### Create
+Users can search for tasks by title or description.
 
-Users can create a new task by entering:
-
-* Title
-* Description
-* Due date
-
-### Read
-
-All saved tasks are displayed on the home screen.
-
-### Update
-
-Users can:
-
-* Edit task information
-* Change the due date
-* Mark a task as completed or pending
-
-### Delete
-
-Users can delete a task after confirming the deletion.
-
-## Search & Filtering
-
-The application provides a search field that allows users to search by:
-
-* Task title
-* Task description
-
-Tasks can also be filtered using:
+Tasks can also be filtered by:
 
 * All
 * Pending
 * Completed
 
-## Theme
+## 🌙 Theme
 
-The application supports:
+The application supports both Light Mode and Dark Mode.
 
-* Light Mode
-* Dark Mode
+The selected theme is stored using SharedPreferences and restored automatically when the application starts again.
 
-The selected theme is saved using **SharedPreferences**, so the user's preference remains after restarting the application.
+## 📱 Screenshots
 
-## Responsive Design
+### Home Screen - Light Mode
 
-The UI adapts to different screen sizes using Flutter's responsive layout tools, allowing the application to work properly on mobile and larger screens.
+![Home Light](docs/screenshots/home_light.png)
 
-## How to Run
+### Home Screen - Dark Mode
+
+![Home Dark](docs/screenshots/home_dark.png)
+
+### Add Task
+
+![Add Task](docs/screenshots/add_task.png)
+
+### Edit Task
+
+![Edit Task](docs/screenshots/edit_task.png)
+
+### Search
+
+![Search](docs/screenshots/search.png)
+
+### Pending Tasks
+
+![Pending Tasks](docs/screenshots/pending_tasks.png)
+
+### Completed Tasks
+
+![Completed Tasks](docs/screenshots/completed_tasks.png)
+
+### Delete Confirmation
+
+![Delete Confirmation](docs/screenshots/delete_confirmation.png)
+
+## 🚀 Getting Started
 
 Clone the repository:
 
 ```bash
-git clone YOUR_REPOSITORY_URL
+git clone https://github.com/nouranagiy/task-manager-flutter.git
 ```
 
 Navigate to the project:
 
 ```bash
-cd task_manager
+cd task-manager-flutter
 ```
 
 Install dependencies:
@@ -153,39 +136,42 @@ Run the application:
 flutter run
 ```
 
-## Screenshots
+## 📁 Project Structure
 
-### Home Screen - Light Mode
-![Home Light](screenshots/home_light.png)
+```text
+lib/
+├── core/
+│   └── theme/
+│       └── app_theme.dart
+├── cubit/
+│   └── task_cubit.dart
+├── data/
+│   ├── local/
+│   │   └── task_adapter.dart
+│   └── repositories/
+│       └── task_repository.dart
+├── models/
+│   └── task_model.dart
+├── screens/
+│   ├── add_task_screen.dart
+│   └── home_screen.dart
+└── main.dart
+```
 
-### Home Screen - Dark Mode
-![Home Dark](docs/screenshots/home_dark.png)
+## 📚 Documentation
 
-### Add Task
-![Add Task](docs/screenshots/add_task.png)
+The project report is available in:
 
-### Edit Task
-![Edit Task](docs/screenshots/edit_task.png)
+```text
+docs/Task_2_Report.pdf
+```
 
-### Search
-![Search](docs/screenshots/search.png)
+## 👩‍💻 Author
 
-### Pending Tasks
-![Pending Tasks](docs/screenshots/pending_tasks.png)
-
-### Completed Tasks
-![Completed Tasks](docs/screenshots/completed_tasks.png)
-
-### Delete Confirmation
-![Delete Confirmation](docs/screenshots/delete_confirmation.png)
-
-## Internship Task
-
-This project was developed as part of **Task 2: Cross-Platform Utility Application with Encrypted Local Storage** during the App Development Internship.
-
-## Author
-
-**Nora Nagy**
+**Nora Nagiy**
 
 Flutter Developer
 
+## 📌 Project
+
+This project demonstrates practical Flutter development skills including local database integration, CRUD operations, state management, responsive UI, search, filtering, and theme persistence.
