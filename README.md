@@ -155,16 +155,29 @@ flutter run
 
 ## Screenshots
 
-Add screenshots of the following screens to this section:
+### Home Screen - Light Mode
+![Home Light](screenshots/home_light.png)
 
-1. Home Screen - Light Mode
-2. Home Screen - Dark Mode
-3. Add Task Screen
-4. Edit Task Screen
-5. Search
-6. Pending Tasks
-7. Completed Tasks
-8. Delete Confirmation
+### Home Screen - Dark Mode
+![Home Dark](screenshots/home_dark.png)
+
+### Add Task
+![Add Task](screenshots/add_task.png)
+
+### Edit Task
+![Edit Task](screenshots/edit_task.png)
+
+### Search
+![Search](screenshots/search.png)
+
+### Pending Tasks
+![Pending Tasks](screenshots/pending_tasks.png)
+
+### Completed Tasks
+![Completed Tasks](screenshots/completed_tasks.png)
+
+### Delete Confirmation
+![Delete Confirmation](screenshots/delete_confirmation.png)
 
 ## Internship Task
 
