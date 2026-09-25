@@ -1,177 +1,207 @@
-# Task Manager 📋
+# TaskFlow
 
-A cross-platform Flutter task management application designed to help users create, organize, search, filter, and manage their daily tasks.
+TaskFlow is a responsive Flutter task-management application for creating, organizing, searching, filtering, and completing daily tasks. It uses a calm, focused workspace design with light and dark themes, local-first storage, and a consistent design system.
 
-## ✨ Features
+## Features
 
-* Create tasks
-* View tasks
-* Edit tasks
-* Delete tasks
-* Mark tasks as completed
-* Set due dates
-* Search by title or description
-* Filter by All, Pending, and Completed
-* Light Mode
-* Dark Mode
-* Persistent theme preference
-* Local data persistence
-* Responsive UI
+- Create tasks with a title, description, and optional due date.
+- Edit and delete existing tasks.
+- Mark tasks as complete or pending.
+- Search by task title or description.
+- Filter tasks by All, Pending, or Completed.
+- View task counts and completion progress.
+- See due-date, overdue, and completion status badges.
+- Switch between light and dark mode.
+- Persist the selected theme between app launches.
+- Store task data locally with Hive.
+- Use a responsive layout with a desktop/tablet sidebar and mobile navigation.
+- Use accessible labels, tooltips, and touch targets for primary actions.
 
-## 🛠️ Tech Stack
+## Technology
 
-* **Flutter**
-* **Dart**
-* **Hive**
-* **SharedPreferences**
-* **BLoC / Cubit**
-* **Material 3**
+- Flutter and Dart
+- Material 3
+- BLoC/Cubit state management
+- Hive for local task storage
+- SharedPreferences for theme persistence
+- Local Plus Jakarta Sans font assets
 
-## 🏗️ Architecture
+## Architecture
 
-The application follows a simple layered structure:
+TaskFlow separates presentation, state, data access, and persistence:
 
 ```text
-UI
- ↓
-Cubit
- ↓
-Repository
- ↓
-Hive
- ↓
-Local Storage
+Presentation widgets and screens
+              ↓
+          TaskCubit
+              ↓
+      TaskRepository interface
+              ↓
+   HiveTaskRepository + Hive
+              ↓
+        Local task storage
 ```
 
-This structure separates the user interface, state management, repository logic, and local data storage.
+The UI communicates with the `TaskCubit`, which coordinates repository operations and exposes loading, success, and failure states. The repository interface keeps the task state independent from Hive so it can be replaced with another storage implementation.
 
-## 💾 Local Storage
+## Project Structure
 
-The application uses Hive to store task data locally.
+```text
+lib/
+├── app/
+│   └── task_app.dart
+├── core/
+│   ├── storage/
+│   │   └── theme_preferences.dart
+│   ├── theme/
+│   │   ├── app_layout.dart
+│   │   ├── app_palette.dart
+│   │   ├── app_semantic_colors.dart
+│   │   ├── app_shadows.dart
+│   │   ├── app_theme.dart
+│   │   ├── app_typography.dart
+│   │   └── design_tokens.dart
+│   ├── utils/
+│   │   └── date_formatter.dart
+│   └── widgets/
+│       ├── app_mark.dart
+│       ├── app_surface.dart
+│       ├── responsive_content.dart
+│       └── status_badge.dart
+├── cubit/
+│   ├── task_cubit.dart
+│   └── task_state.dart
+├── data/
+│   ├── local/
+│   │   └── task_adapter.dart
+│   └── repositories/
+│       ├── hive_task_repository.dart
+│       └── task_repository.dart
+├── features/
+│   └── tasks/
+│       └── presentation/
+│           ├── screens/
+│           │   ├── add_task_screen.dart
+│           │   └── home_screen.dart
+│           └── widgets/
+│               ├── task_card.dart
+│               ├── task_dashboard_view.dart
+│               ├── task_date_field.dart
+│               ├── task_empty_state.dart
+│               ├── task_filter.dart
+│               ├── task_filter_navigation.dart
+│               ├── task_form_field.dart
+│               ├── task_page_header.dart
+│               ├── task_search_field.dart
+│               ├── task_sidebar.dart
+│               └── task_summary_card.dart
+├── main.dart
+└── models/
+    └── task_model.dart
+```
+
+## Task Model
 
 Each task contains:
 
-* ID
-* Title
-* Description
-* Creation Date
-* Due Date
-* Completion Status
+- A unique ID
+- Title
+- Description
+- Creation date
+- Optional due date
+- Completion status
 
-Task data remains available after restarting the application.
+Due dates are normalized to date-only values. Task models support value equality and safe copying for updates, including clearing an existing due date.
 
-## 🔎 Search & Filtering
+## Local Persistence
 
-Users can search for tasks by title or description.
+TaskFlow initializes Hive during startup and stores tasks in the `tasks` box. The selected theme is stored separately through SharedPreferences and restored before the first frame.
 
-Tasks can also be filtered by:
+No account or network connection is required to use the application.
 
-* All
-* Pending
-* Completed
+## Design System
 
-## 🌙 Theme
+The visual system is centralized under `lib/core/theme/`:
 
-The application supports both Light Mode and Dark Mode.
+- `AppPalette` defines the approved light and dark color palettes.
+- `AppTypography` applies Plus Jakarta Sans with consistent weights and text scales.
+- `AppSpacing`, `AppRadii`, and `AppDimensions` define reusable layout values.
+- `AppSemanticColors` provides success, warning, error, and information states.
+- `AppShadows` provides theme-aware elevation styles.
+- `AppTheme` assembles the Material 3 component themes.
 
-The selected theme is stored using SharedPreferences and restored automatically when the application starts again.
+The primary visual language uses indigo and teal accents, soft surfaces, restrained borders, rounded components, and subtle elevation.
 
-## 📱 Screenshots
+## Branding
 
-### Home Screen - Light Mode
+TaskFlow uses a purple-to-teal gradient mark with a white check and a small teal accent.
 
-![Home Light](docs/screenshots/home_light.png)
+- In-app mark: `lib/core/widgets/app_mark.dart`
+- Android launcher icons: `android/app/src/main/res/mipmap-*/ic_launcher.png`
+- iOS launcher icons: `ios/Runner/Assets.xcassets/AppIcon.appiconset/`
 
-### Home Screen - Dark Mode
+The application name is configured in the Flutter app shell, Android manifest, and iOS bundle metadata.
 
-![Home Dark](docs/screenshots/home_dark.png)
+## Getting Started
 
-### Add Task
+### Prerequisites
 
-![Add Task](docs/screenshots/add_task.png)
+Install the following tools:
 
-### Edit Task
+- Flutter SDK
+- Dart SDK included with Flutter
+- Android Studio or an Android SDK for Android builds
+- Xcode and CocoaPods for iOS builds on macOS
 
-![Edit Task](docs/screenshots/edit_task.png)
-
-### Search
-
-![Search](docs/screenshots/search.png)
-
-### Pending Tasks
-
-![Pending Tasks](docs/screenshots/pending_tasks.png)
-
-### Completed Tasks
-
-![Completed Tasks](docs/screenshots/completed_tasks.png)
-
-### Delete Confirmation
-
-![Delete Confirmation](docs/screenshots/delete_confirmation.png)
-
-## 🚀 Getting Started
-
-Clone the repository:
+### Clone the Repository
 
 ```bash
 git clone https://github.com/nouranagiy/task-manager-flutter.git
-```
-
-Navigate to the project:
-
-```bash
 cd task-manager-flutter
 ```
 
-Install dependencies:
+### Install Dependencies
 
 ```bash
 flutter pub get
 ```
 
-Run the application:
+### Run the Application
 
 ```bash
 flutter run
 ```
 
-## 📁 Project Structure
+Choose a connected device when Flutter prompts for one.
 
-```text
-lib/
-├── core/
-│   └── theme/
-│       └── app_theme.dart
-├── cubit/
-│   └── task_cubit.dart
-├── data/
-│   ├── local/
-│   │   └── task_adapter.dart
-│   └── repositories/
-│       └── task_repository.dart
-├── models/
-│   └── task_model.dart
-├── screens/
-│   ├── add_task_screen.dart
-│   └── home_screen.dart
-└── main.dart
+## Quality Checks
+
+Run the analyzer:
+
+```bash
+flutter analyze
 ```
 
-## 📚 Documentation
+Run the test suite:
 
-The project report is available in:
-
-```text
-docs/Task_2_Report.pdf
+```bash
+flutter test
 ```
 
-## 👩‍💻 Author
+Build a debug Android package:
+
+```bash
+flutter build apk --debug
+```
+
+The formatted Dart sources can be checked with:
+
+```bash
+dart format --set-exit-if-changed lib test
+```
+
+## Author
 
 **Nora Nagiy**
 
 Flutter Developer
-
-## 📌 Project
-
-This project demonstrates practical Flutter development skills including local database integration, CRUD operations, state management, responsive UI, search, filtering, and theme persistence.

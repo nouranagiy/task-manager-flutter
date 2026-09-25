@@ -1,29 +1,64 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:task1/main.dart';
+import 'package:task1/app/task_app.dart';
+import 'package:task1/core/storage/theme_preferences.dart';
+import 'package:task1/data/repositories/task_repository.dart';
+import 'package:task1/models/task_model.dart';
+
+class _MemoryTaskRepository implements TaskRepository {
+  _MemoryTaskRepository([List<TaskModel>? initialTasks])
+    : _tasks = [...?initialTasks];
+
+  final List<TaskModel> _tasks;
+
+  @override
+  Future<void> addTask(TaskModel task) async {
+    _tasks.add(task);
+  }
+
+  @override
+  Future<void> deleteTask(String id) async {
+    _tasks.removeWhere((task) => task.id == id);
+  }
+
+  @override
+  List<TaskModel> getTasks() => List.unmodifiable(_tasks);
+
+  @override
+  Future<void> updateTask(TaskModel task) async {
+    final index = _tasks.indexWhere((item) => item.id == task.id);
+    if (index == -1) {
+      _tasks.add(task);
+    } else {
+      _tasks[index] = task;
+    }
+  }
+}
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget( MyApp(isDarkMode: false));
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  testWidgets('renders the task workspace and opens the create form', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(<String, Object>{});
+    final preferences = await SharedPreferences.getInstance();
+    final repository = _MemoryTaskRepository();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    await tester.pumpWidget(
+      TaskApp(
+        repository: repository,
+        themePreferences: ThemePreferences(preferences),
+      ),
+    );
+    await tester.pumpAndSettle();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(find.text('Stay on top of your day.'), findsOneWidget);
+    expect(find.text('Ready when you are'), findsOneWidget);
+
+    await tester.tap(find.byTooltip('Create task'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Add task'), findsOneWidget);
+    expect(find.text('Task title'), findsOneWidget);
   });
 }
