@@ -8,6 +8,7 @@ import '../../../../cubit/task_cubit.dart';
 import '../../../../cubit/task_state.dart';
 import '../../../../models/task_model.dart';
 import '../widgets/task_dashboard_view.dart';
+import '../widgets/task_details_dialog.dart';
 import '../widgets/task_filter.dart';
 import '../widgets/task_filter_navigation.dart';
 import '../widgets/task_sidebar.dart';
@@ -95,6 +96,10 @@ class _TaskDashboardScreenState extends State<TaskDashboardScreen> {
     unawaited(context.read<TaskCubit>().toggleTask(task));
   }
 
+  void _openDetails(TaskModel task) {
+    unawaited(showTaskDetailsDialog(context, task));
+  }
+
   @override
   Widget build(BuildContext context) {
     return BlocListener<TaskCubit, TaskState>(
@@ -174,6 +179,7 @@ class _TaskDashboardScreenState extends State<TaskDashboardScreen> {
                           },
                           onToggle: _toggleTask,
                           onEdit: _openEdit,
+                          onViewDetails: _openDetails,
                           onDelete: (task) {
                             unawaited(_confirmDelete(task));
                           },

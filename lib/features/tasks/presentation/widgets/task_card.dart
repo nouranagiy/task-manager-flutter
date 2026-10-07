@@ -13,12 +13,14 @@ class TaskCard extends StatelessWidget {
     required this.onToggle,
     required this.onEdit,
     required this.onDelete,
+    required this.onViewDetails,
   });
 
   final TaskModel task;
   final VoidCallback onToggle;
   final VoidCallback onEdit;
   final VoidCallback onDelete;
+  final VoidCallback onViewDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -72,6 +74,23 @@ class TaskCard extends StatelessWidget {
                       overflow: TextOverflow.ellipsis,
                       style: theme.textTheme.bodyMedium,
                     ),
+                    TextButton.icon(
+                      onPressed: onViewDetails,
+                      icon: const Icon(
+                        Icons.notes_rounded,
+                        size: AppDimensions.iconSizeSm,
+                      ),
+                      label: const Text('View details'),
+                      style: TextButton.styleFrom(
+                        padding: EdgeInsets.zero,
+                        minimumSize: const Size(
+                          0,
+                          AppDimensions.compactButtonHeight,
+                        ),
+                        tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                        alignment: Alignment.centerLeft,
+                      ),
+                    ),
                   ],
                   const SizedBox(height: AppSpacing.sm),
                   Wrap(
@@ -87,6 +106,8 @@ class TaskCard extends StatelessWidget {
               tooltip: 'Task actions',
               onSelected: (action) {
                 switch (action) {
+                  case _TaskMenuAction.details:
+                    onViewDetails();
                   case _TaskMenuAction.edit:
                     onEdit();
                   case _TaskMenuAction.delete:
@@ -94,6 +115,14 @@ class TaskCard extends StatelessWidget {
                 }
               },
               itemBuilder: (context) => const [
+                PopupMenuItem(
+                  value: _TaskMenuAction.details,
+                  child: ListTile(
+                    contentPadding: EdgeInsets.zero,
+                    leading: Icon(Icons.visibility_outlined),
+                    title: Text('View details'),
+                  ),
+                ),
                 PopupMenuItem(
                   value: _TaskMenuAction.edit,
                   child: ListTile(
@@ -153,4 +182,4 @@ class TaskCard extends StatelessWidget {
   }
 }
 
-enum _TaskMenuAction { edit, delete }
+enum _TaskMenuAction { details, edit, delete }

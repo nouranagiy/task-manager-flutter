@@ -29,6 +29,7 @@ class AppDimensions {
   static const double sidebarWidth = 248;
   static const double contentMaxWidth = 1180;
   static const double formMaxWidth = 720;
+  static const double detailsMaxWidth = 560;
   static const double emptyStateMaxWidth = 360;
   static const double tabletBreakpoint = 1100;
   static const double buttonHeight = 52;

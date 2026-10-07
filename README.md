@@ -11,6 +11,7 @@ TaskFlow is a responsive Flutter task-management application for creating, organ
 - Filter tasks by All, Pending, or Completed.
 - View task counts and completion progress.
 - See due-date, overdue, and completion status badges.
+- Open a scrollable task-details dialog from the View details button when a description is longer than the card preview.
 - Switch between light and dark mode.
 - Persist the selected theme between app launches.
 - Store task data locally with Hive.
@@ -87,6 +88,7 @@ lib/
 │               ├── task_card.dart
 │               ├── task_dashboard_view.dart
 │               ├── task_date_field.dart
+│               ├── task_details_dialog.dart
 │               ├── task_empty_state.dart
 │               ├── task_filter.dart
 │               ├── task_filter_navigation.dart

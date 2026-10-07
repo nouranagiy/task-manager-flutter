@@ -33,6 +33,7 @@ class TaskDashboardView extends StatelessWidget {
     required this.onToggle,
     required this.onEdit,
     required this.onDelete,
+    required this.onViewDetails,
   });
 
   final List<TaskModel> visibleTasks;
@@ -55,6 +56,7 @@ class TaskDashboardView extends StatelessWidget {
   final ValueChanged<TaskModel> onToggle;
   final ValueChanged<TaskModel> onEdit;
   final ValueChanged<TaskModel> onDelete;
+  final ValueChanged<TaskModel> onViewDetails;
 
   @override
   Widget build(BuildContext context) {
@@ -152,6 +154,7 @@ class TaskDashboardView extends StatelessWidget {
                       onToggle: () => onToggle(task),
                       onEdit: () => onEdit(task),
                       onDelete: () => onDelete(task),
+                      onViewDetails: () => onViewDetails(task),
                     ),
                   );
                 }, childCount: visibleTasks.length),

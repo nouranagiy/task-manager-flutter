@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -60,5 +61,46 @@ void main() {
 
     expect(find.text('Add task'), findsOneWidget);
     expect(find.text('Task title'), findsOneWidget);
+  });
+
+  testWidgets('opens the full task details dialog from the task card', (
+    tester,
+  ) async {
+    SharedPreferences.setMockInitialValues(<String, Object>{});
+    final preferences = await SharedPreferences.getInstance();
+    final description =
+        'Review the project requirements, confirm the milestone dates, '
+        'and prepare the handoff notes for the team before Friday.';
+    final repository = _MemoryTaskRepository([
+      TaskModel.create(title: 'Prepare handoff', description: description),
+    ]);
+
+    tester.view.physicalSize = const Size(1200, 1600);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(() {
+      tester.view.resetPhysicalSize();
+      tester.view.resetDevicePixelRatio();
+    });
+
+    await tester.pumpWidget(
+      TaskApp(
+        repository: repository,
+        themePreferences: ThemePreferences(preferences),
+      ),
+    );
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('View details'));
+    await tester.pumpAndSettle();
+
+    expect(find.byType(AlertDialog), findsOneWidget);
+    expect(find.text('Task details'), findsOneWidget);
+    expect(
+      find.descendant(
+        of: find.byType(AlertDialog),
+        matching: find.text(description),
+      ),
+      findsOneWidget,
+    );
   });
 }

@@ -44,15 +44,18 @@ class TaskSidebar extends StatelessWidget {
               children: [
                 const AppMark(),
                 const SizedBox(width: AppSpacing.sm),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('TaskFlow', style: theme.textTheme.titleMedium),
-                    Text(
-                      'Personal workspace',
-                      style: theme.textTheme.bodySmall,
-                    ),
-                  ],
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('TaskFlow', style: theme.textTheme.titleMedium),
+                      Text(
+                        'Personal workspace',
+                        overflow: TextOverflow.ellipsis,
+                        style: theme.textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
                 ),
               ],
             ),
